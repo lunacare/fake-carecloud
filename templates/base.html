@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }} - Fake CareCloud API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin-right: 20px; text-decoration: none; color: #007bff; }
+        .nav a:hover { text-decoration: underline; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/ui">Home</a>
+        <a href="/ui/patients">Patients</a>
+        <a href="/ui/appointments">Appointments</a>
+    </div>
+    
+    <h1>{{ title }}</h1>
+    
+    {% block content %}{% endblock %}
+</body>
+</html>

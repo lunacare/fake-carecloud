@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Total appointments: {{ appointments|length }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Provider</th>
+            <th>Location</th>
+            <th>Visit Reason</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>
+                {% if appointment.patient %}
+                {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+                {% else %}
+                Unknown
+                {% endif %}
+            </td>
+            <td>{{ appointment.start_time.strftime('%Y-%m-%d %H:%M') if appointment.start_time else '' }}</td>
+            <td>{{ appointment.end_time.strftime('%Y-%m-%d %H:%M') if appointment.end_time else '' }}</td>
+            <td>
+                {% if appointment.provider %}
+                {{ appointment.provider.name }}
+                {% else %}
+                ID: {{ appointment.provider_id }}
+                {% endif %}
+            </td>
+            <td>
+                {% if appointment.location %}
+                {{ appointment.location.name }}
+                {% else %}
+                ID: {{ appointment.location_id }}
+                {% endif %}
+            </td>
+            <td>
+                {% if appointment.visit_reason %}
+                {{ appointment.visit_reason.name }}
+                {% else %}
+                ID: {{ appointment.visit_reason_id }}
+                {% endif %}
+            </td>
+            <td>{{ appointment.status }}</td>
+            <td>{{ appointment.created_at.strftime('%Y-%m-%d %H:%M') if appointment.created_at else '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

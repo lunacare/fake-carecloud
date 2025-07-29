@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Welcome to the Fake CareCloud API debugging interface.</p>
+
+<h2>Available Views</h2>
+<ul>
+    <li><a href="/ui/patients">View Patients</a> - All patient records with addresses and phone numbers</li>
+    <li><a href="/ui/appointments">View Appointments</a> - All appointments with patient and provider details</li>
+</ul>
+
+<h2>API Information</h2>
+<ul>
+    <li><a href="/docs">API Documentation</a></li>
+    <li><a href="/health">Health Check</a></li>
+</ul>
+{% endblock %}

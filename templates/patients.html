@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Total patients: {{ patients|length }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+            <td>{{ patient.date_of_birth }}</td>
+            <td>
+                {% for address in patient.addresses %}
+                {{ address.line1 }}{% if address.line2 %}, {{ address.line2 }}{% endif %}<br>
+                {{ address.city }}, {{ address.state }} {{ address.zip_code }}
+                {% if not loop.last %}<hr>{% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for phone in patient.phones %}
+                {{ phone.phone_number }}{% if phone.phone_type_code %} ({{ phone.phone_type_code }}){% endif %}
+                {% if not loop.last %}<br>{% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ patient.created_at.strftime('%Y-%m-%d %H:%M') if patient.created_at else '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
