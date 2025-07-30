@@ -92,7 +92,8 @@ async def root():
         "ui": {
             "home": "/ui",
             "patients": "/ui/patients",
-            "appointments": "/ui/appointments"
+            "appointments": "/ui/appointments",
+            "patient_detail": "/ui/patients/{patient_id}"
         }
     }
 

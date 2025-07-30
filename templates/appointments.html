@@ -23,7 +23,7 @@
             <td>{{ appointment.id }}</td>
             <td>
                 {% if appointment.patient %}
-                {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+                <a href="/ui/patients/{{ appointment.patient.id }}">{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</a>
                 {% else %}
                 Unknown
                 {% endif %}

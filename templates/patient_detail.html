@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><a href="/ui/patients">&larr; Back to Patients</a></p>
+
+<h2>Patient Information</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <td>{{ patient.id }}</td>
+    </tr>
+    <tr>
+        <th>Name</th>
+        <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+    </tr>
+    <tr>
+        <th>Date of Birth</th>
+        <td>{{ patient.date_of_birth }}</td>
+    </tr>
+    <tr>
+        <th>Created</th>
+        <td>{{ patient.created_at.strftime('%Y-%m-%d %H:%M') if patient.created_at else '' }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ patient.updated_at.strftime('%Y-%m-%d %H:%M') if patient.updated_at else '' }}</td>
+    </tr>
+</table>
+
+<h2>Addresses ({{ patient.addresses|length }})</h2>
+{% if patient.addresses %}
+<table>
+    <thead>
+        <tr>
+            <th>Address</th>
+            <th>Primary</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for address in patient.addresses %}
+        <tr>
+            <td>
+                {{ address.line1 }}{% if address.line2 %}<br>{{ address.line2 }}{% endif %}{% if address.line3 %}<br>{{ address.line3 }}{% endif %}<br>
+                {{ address.city }}, {{ address.state }} {{ address.zip_code }}<br>
+                {{ address.country_name }}
+            </td>
+            <td>{{ "Yes" if address.is_primary else "No" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No addresses on file.</p>
+{% endif %}
+
+<h2>Phone Numbers ({{ patient.phones|length }})</h2>
+{% if patient.phones %}
+<table>
+    <thead>
+        <tr>
+            <th>Phone Number</th>
+            <th>Type</th>
+            <th>Extension</th>
+            <th>Primary</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for phone in patient.phones %}
+        <tr>
+            <td>{{ phone.phone_number }}</td>
+            <td>{{ phone.phone_type_code }}</td>
+            <td>{{ phone.extension or '' }}</td>
+            <td>{{ "Yes" if phone.is_primary else "No" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No phone numbers on file.</p>
+{% endif %}
+
+<h2>Appointments ({{ appointments|length }})</h2>
+{% if appointments %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Provider</th>
+            <th>Location</th>
+            <th>Visit Reason</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ appointment.start_time.strftime('%Y-%m-%d %H:%M') if appointment.start_time else '' }}</td>
+            <td>{{ appointment.end_time.strftime('%Y-%m-%d %H:%M') if appointment.end_time else '' }}</td>
+            <td>
+                {% if appointment.provider %}
+                {{ appointment.provider.name }}
+                {% else %}
+                ID: {{ appointment.provider_id }}
+                {% endif %}
+            </td>
+            <td>
+                {% if appointment.location %}
+                {{ appointment.location.name }}
+                {% else %}
+                ID: {{ appointment.location_id }}
+                {% endif %}
+            </td>
+            <td>
+                {% if appointment.visit_reason %}
+                {{ appointment.visit_reason.name }}
+                {% else %}
+                ID: {{ appointment.visit_reason_id }}
+                {% endif %}
+            </td>
+            <td>{{ appointment.status }}</td>
+            <td>{{ appointment.created_at.strftime('%Y-%m-%d %H:%M') if appointment.created_at else '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No appointments for this patient.</p>
+{% endif %}
+{% endblock %}
