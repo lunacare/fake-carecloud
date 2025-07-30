@@ -65,6 +65,18 @@ A mock implementation of the CareCloud API for testing purposes. This lightweigh
 - API Base URL: `http://localhost:7000/v2`
 - API Documentation: `http://localhost:7000/docs`
 - Health Check: `http://localhost:7000/health`
+- Web UI: `http://localhost:7000/ui`
+
+## Web UI
+
+The API includes a simple web interface for viewing and managing data:
+
+- **Home**: `http://localhost:7000/ui` - Overview and navigation
+- **Patients List**: `http://localhost:7000/ui/patients` - View all patients with clickable links
+- **Patient Details**: `http://localhost:7000/ui/patients/{patient_id}` - Detailed patient information including addresses, phones, and appointments
+- **Appointments List**: `http://localhost:7000/ui/appointments` - View all appointments with patient links
+
+The UI provides an easy way to inspect the database contents and navigate between related records without needing API calls.
 
 ## Usage Example
 
@@ -183,7 +195,7 @@ The API uses SQLite with the database file `carecloud.db` created automatically 
 ## API Endpoints
 
 ### Authentication
-- `POST /v2/oauth2/access_token` - Get access token
+- `POST /oauth2/access_token` - Get access token
 
 ### Patients
 - `POST /v2/patients` - Create patient
@@ -201,6 +213,16 @@ The API uses SQLite with the database file `carecloud.db` created automatically 
 - `GET /v2/appointments/{id}` - Get appointment
 - `PUT /v2/appointments/{id}` - Update appointment
 - `DELETE /v2/appointments/{id}` - Cancel appointment
+
+### Debug Endpoints
+- `GET /debug/patients` - Get all patients (for testing)
+- `GET /debug/appointments` - Get all appointments (for testing)
+
+### UI Pages
+- `GET /ui` - Web interface home
+- `GET /ui/patients` - Patients list page
+- `GET /ui/appointments` - Appointments list page
+- `GET /ui/patients/{id}` - Patient detail page
 
 ## Configuration
 
