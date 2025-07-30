@@ -82,38 +82,7 @@ def create_seed_data(db: Session):
     for vr in visit_reasons:
         db.add(vr)
     
-    # Create Sample Patient (based on notebook data)
-    patient_id = "37d480d1-fe7d-4600-bbb1-bd79367e418d"
-    patient = Patient(
-        id=patient_id,
-        first_name="John",
-        last_name="Doe",
-        date_of_birth="1970-01-01"
-    )
-    db.add(patient)
-    
-    # Create Patient Address
-    address = PatientAddress(
-        patient_id=patient_id,
-        line1="123 Main St",
-        line2="",
-        city="Lyons",
-        state="CO",
-        zip_code="80540",
-        country_name="USA",
-        is_primary=True
-    )
-    db.add(address)
-    
-    # Create Patient Phone
-    phone = PatientPhone(
-        patient_id=patient_id,
-        phone_number="303-867-5309",
-        phone_type_code="M",
-        extension="",
-        is_primary=True
-    )
-    db.add(phone)
+    # No sample patients created - API starts with empty patient database
     
     db.commit()
     logger.info("Seed data created successfully!")

@@ -58,7 +58,7 @@ A mock implementation of the CareCloud API for testing purposes. This lightweigh
    
    Or using uvicorn directly:
    ```bash
-   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+   uvicorn app:app --host 127.0.0.1 --port 7000 --reload
    ```
 
 ### Access the API
@@ -173,7 +173,8 @@ The API comes pre-loaded with sample data matching the original CareCloud notebo
 - **Location**: Luna Care Physical Therapy (ID: 55491)
 - **Resource**: Dr. Kris Duggan (ID: 37367)
 - **Visit Reasons**: Initial, Standard, Progress, Re-evaluation, Discharge visits
-- **Sample Patient**: John Doe (ID: 37d480d1-fe7d-4600-bbb1-bd79367e418d)
+
+**Note**: No sample patients are created - the API starts with an empty patient database for clean testing.
 
 ## Database
 
@@ -205,8 +206,8 @@ The API uses SQLite with the database file `carecloud.db` created automatically 
 
 The API can be configured using environment variables:
 
-- `FAKE_CARECLOUD_HOST` - Server host (default: "0.0.0.0")
-- `FAKE_CARECLOUD_PORT` - Server port (default: "8000")  
+- `FAKE_CARECLOUD_HOST` - Server host (default: "127.0.0.1")
+- `FAKE_CARECLOUD_PORT` - Server port (default: "7000")  
 - `FAKE_CARECLOUD_DEBUG` - Enable debug/reload mode (default: "false")
 - `DATABASE_URL` - Database connection string (default: "sqlite:///./carecloud.db")
 - `API_TITLE` - API title in documentation (default: "Fake CareCloud API")
