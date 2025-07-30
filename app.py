@@ -3,10 +3,11 @@ import logging
 from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from database import engine, Base, SessionLocal
 from models import *
 from seed_data import create_seed_data
-from routers import auth, patients, providers, appointments, ui
+from routers import auth, patients, providers, appointments, ui, debug
 
 # Configure logging
 logging.basicConfig(
@@ -67,11 +68,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Include routers
 app.include_router(auth.router, tags=["Authentication"])  # OAuth endpoint has no /v2 prefix
 app.include_router(patients.router, prefix="/v2", tags=["Patients"])
 app.include_router(providers.router, prefix="/v2", tags=["Providers"])
 app.include_router(appointments.router, prefix="/v2", tags=["Appointments"])
+app.include_router(debug.router, prefix="/debug", tags=["Debug"])
 app.include_router(ui.router, tags=["UI"])
 
 @app.get("/")
@@ -94,6 +99,10 @@ async def root():
             "patients": "/ui/patients",
             "appointments": "/ui/appointments",
             "patient_detail": "/ui/patients/{patient_id}"
+        },
+        "debug": {
+            "all_patients": "/debug/patients",
+            "all_appointments": "/debug/appointments"
         }
     }
 
@@ -101,10 +110,15 @@ async def root():
 async def health_check():
     return {"status": "healthy"}
 
+@app.get("/favicon.ico")
+async def favicon():
+    from fastapi.responses import FileResponse
+    return FileResponse("favicon.ico")
+
 if __name__ == "__main__":
     import uvicorn
-    host = os.getenv("FAKE_CARECLOUD_HOST", "0.0.0.0")
-    port = int(os.getenv("FAKE_CARECLOUD_PORT", "8000"))
+    host = os.getenv("FAKE_CARECLOUD_HOST", "127.0.0.1")
+    port = int(os.getenv("FAKE_CARECLOUD_PORT", "7000"))
     debug = os.getenv("FAKE_CARECLOUD_DEBUG", "false").lower() == "true"
     
     logger.info(f"Starting Fake CareCloud API server on {host}:{port}")

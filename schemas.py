@@ -145,14 +145,17 @@ class AppointmentRequest(BaseModel):
 
 class AppointmentResponse(BaseModel):
     id: str
-    start_time: str
-    end_time: str
+    start_time: datetime
+    end_time: datetime
     provider_id: int
     location_id: int
     visit_reason_id: int
     resource_id: int
     patient_id: str
     status: str
+    
+    class Config:
+        from_attributes = True
 
 class AppointmentCreateResponse(BaseModel):
     appointment: str
