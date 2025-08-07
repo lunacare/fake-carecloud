@@ -49,7 +49,7 @@ def get_access_token(base_url, grant_type, refresh_token):
 @click.command()
 @click.option(
     "--url", 
-    default=lambda: os.getenv("FAKE_CARECLOUD_URL", "http://localhost:7000"),
+    default=lambda: os.getenv("FAKE_CARECLOUD_URL", "http://127.0.0.1:7000"),
     help="Base URL of the fake CareCloud API"
 )
 @click.option(
